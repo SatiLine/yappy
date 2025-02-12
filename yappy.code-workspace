@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.AdvanceCustomBrowserCmdLine": "",
+		"liveServer.settings.donotShowInfoMsg": false,
+		"liveServer.settings.host": "127.0.0.2"
+	}
+}
