@@ -23,35 +23,35 @@ function readFile(path, callback) {
     }, Math.floor(Math.random() * 1000))
 }
 
-// Создание оберток для функций с использованием промисов
-function readConfigPromise(name) {
-    return new Promise(resolve => readConfig(name, resolve));
-}
-function doQueryPromise(statement) {
-    return new Promise(resolve => doQuery(statement, resolve));
-}
-function httpGetPromise(url) {
-    return new Promise(resolve => httpGet(url, resolve));
-}
-function readFilePromise(path) {
-    return new Promise(resolve => readFile(path, resolve));
-}
+// // Создание оберток для функций с использованием промисов
+// function readConfigPromise(name) {
+//     return new Promise(resolve => readConfig(name, resolve));
+// }
+// function doQueryPromise(statement) {
+//     return new Promise(resolve => doQuery(statement, resolve));
+// }
+// function httpGetPromise(url) {
+//     return new Promise(resolve => httpGet(url, resolve));
+// }
+// function readFilePromise(path) {
+//     return new Promise(resolve => readFile(path, resolve));
+// }
 
-// // Вызов функций с использованием коллбэков
-// console.log('start')
-// readConfig('myConfig', () => {
-//     doQuery('select * from cities', () => {
-//         httpGet('http://google.com', () => {
-//             readFile('README.md', () => {
-//                 console.log('It is done with callbacks!')
-//                 
-//                 console.log('end');
-//             })
-//         })
-//     })
-// })
+// Вызов функций с использованием коллбэков
+console.log('start')
+readConfig('myConfig', () => {
+    doQuery('select * from cities', () => {
+        httpGet('http://google.com', () => {
+            readFile('README.md', () => {
+                console.log('It is done with callbacks!')
+                
+                console.log('end');
+            })
+        })
+    })
+})
 
-// Вызов функций с использованием промисов
+/* Вызов функций с использованием промисов
 readConfigPromise('myConfig')
     .then(() => doQueryPromise('select * from cities'))
     .then(() => httpGetPromise('http://google.com'))
@@ -60,4 +60,4 @@ readConfigPromise('myConfig')
         console.log('It is done with promises!');
 
         console.log('end');
-    })
+    }) */
