@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удаление повторяющихся слов</title>
+</head>
+<body>
+    <script>
+        let s = prompt("Введите строку:");
+        let words = s.split(/\s+/).filter(word => word.length > 0);
+        let uniqueWords = [];
+        
+        for (let word of words) {
+            if (!uniqueWords.includes(word)) {
+                uniqueWords.push(word);
+            }
+        }
+        
+        let result = uniqueWords.join(' ');
+        alert("Результат: " + result);
+    </script>
+</body>
+</html>

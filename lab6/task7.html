@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Очистка содержимого</title>
+</head>
+<body>
+    <ol id="list">
+        <li>Привет</li>
+        <li>Мир</li>
+    </ol>
+
+    <script>
+        function clear(elem) {
+            elem.innerHTML = ''; 
+        }
+
+        const list = document.getElementById('list');
+
+        clear(list);
+    </script>
+</body>
+</html>

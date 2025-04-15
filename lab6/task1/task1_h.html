@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Обработка матрицы</title>
+</head>
+<body>
+    <script>
+        let n = parseInt(prompt("Введите порядок матрицы:"));
+        let matrix = [];
+        
+        for (let i = 0; i < n; i++) {
+            matrix[i] = [];
+            for (let j = 0; j < n; j++) {
+                matrix[i][j] = Math.floor(Math.random() * 100);
+            }
+        }
+        
+        let diagonalValues = [];
+        for (let i = 0; i < n; i++) {
+            diagonalValues.push(matrix[i][i]);         
+            diagonalValues.push(matrix[i][n - 1 - i]); 
+        }
+        
+        let minDiagonal = Math.min(...diagonalValues);
+        let maxDiagonal = Math.max(...diagonalValues);
+        
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++) {
+                if (i === j || i + j === n - 1) { 
+                    if (matrix[i][j] !== minDiagonal && matrix[i][j] !== maxDiagonal) {
+                        matrix[i][j] = 0;
+                    }
+                }
+            }
+        }
+        
+        let output = "Результат:\n";
+        for (let i = 0; i < n; i++) {
+            output += matrix[i].join("\t") + "\n";
+        }
+        alert(output);
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление дней к дате</title>
+</head>
+<body>
+    <script>
+        let n = parseInt(prompt("Введите количество дней для добавления:"));
+        let currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + n);
+        
+        alert("Новая дата: " + currentDate.toLocaleDateString());
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Массив чисел</title>
+</head>
+<body>
+    <script>
+        let n = parseInt(prompt("Введите количество чисел:"));
+        let arr = [];
+        
+        for (let i = 0; i < n; i++) {
+            arr.push(Math.floor(Math.random() * 100));
+        }
+        
+        arr.reverse();
+        let output = "";
+        
+        for (let i = 0; i < arr.length; i++) {
+            output += arr[i] + " ";
+            if ((i + 1) % 5 === 0 || i === arr.length - 1) {
+                alert(output);
+                output = "";
+            }
+        }
+    </script>
+</body>
+</html>

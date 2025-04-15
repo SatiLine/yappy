@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Принадлежность точки квадрату</title>
+</head>
+<body>
+    <script>
+        let x1 = parseFloat(prompt("Введите x первой вершины квадрата:"));
+        let y1 = parseFloat(prompt("Введите y первой вершины квадрата:"));
+        let x2 = parseFloat(prompt("Введите x противоположной вершины квадрата:"));
+        let y2 = parseFloat(prompt("Введите y противоположной вершины квадрата:"));
+        
+        let x = parseFloat(prompt("Введите x точки:"));
+        let y = parseFloat(prompt("Введите y точки:"));
+        
+        let minX = Math.min(x1, x2);
+        let maxX = Math.max(x1, x2);
+        let minY = Math.min(y1, y2);
+        let maxY = Math.max(y1, y2);
+        
+        let isInside = (x >= minX && x <= maxX && y >= minY && y <= maxY);
+        alert("Точка " + (isInside ? "принадлежит" : "не принадлежит") + " квадрату");
+    </script>
+</body>
+</html>
