@@ -1,0 +1,17 @@
+body { 
+  font-family: Arial, sans-serif; 
+}
+
+.animal-img { 
+  width: 400px; 
+  height: auto; 
+  margin: 20px 0; 
+}
+
+.hidden { 
+  display: none; 
+}
+
+button { 
+  margin: 5px; 
+}

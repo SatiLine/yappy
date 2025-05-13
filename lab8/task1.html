@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Факты о животных</title>
+  <link rel="stylesheet" href="task1.css">
+</head>
+<body>
+  <h2 id="greeting">Здравствуйте, <span id="username">...</span>!</h2>
+  <button id="changeName">Сменить имя</button>
+  <button id="acceptName">Это моё имя</button>
+  <div id="animalChoice" class="hidden">
+    <p>Выберите животное:</p>
+    <button data-animal="cat">Кошка</button>
+    <button data-animal="dog">Собака</button>
+    <button data-animal="fox">Лиса</button>
+  </div>
+  <div id="animalInfo" class="hidden">
+    <img id="animalImg" class="animal-img" referrerpolicy="no-referrer">
+    <p id="animalFact"></p>
+  </div>
+  <script src="task1.js"></script>
+</body>
+</html>
