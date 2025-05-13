@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Human Data Table</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        button { margin: 5px; padding: 5px 10px; cursor: pointer; }
+        input, select { width: 95%; }
+    </style>
+</head>
+<body>
+    <button id="loadBtn">Загрузить</button>
+    <select id="filter">
+        <option value="all">Все</option>
+        <option value="male">Мужчины</option>
+        <option value="female">Женщины</option>
+    </select>
+    <button id="addBtn">Добавить</button>
+    <table id="table"></table>
+    
+    <script type="module" src="task3-2.js"></script>
+</body>
+</html>
