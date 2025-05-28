@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        button {
+            background-color: #dc3545;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+        
+        .message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    
+    <button id="hideButton" onclick="hideSelf()">За царя!</button>
+    
+    <div id="message" class="message" style="display: none;">
+        Мы победили!
+    </div>
+    
+    <script>
+        function hideSelf() {
+            const button = document.getElementById('hideButton');
+            
+            button.style.display = 'none';
+            
+            document.getElementById('message').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

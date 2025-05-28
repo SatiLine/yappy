@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задание 5</title>
+</head>
+<body>
+    
+    <label for="textField">Текстовое поле:</label>
+    <input type="text" id="textField" placeholder="Введите текст">
+    
+    <script>
+        function showChangeWindow() {
+            const newWindow = window.open('', '_blank', 'width=300,height=150');
+            newWindow.document.write('<h2>Текст был изменен!!!</h2>');
+            newWindow.document.write('<button onclick="window.close()">Закрыть</button>');
+        }
+    
+        document.getElementById('textField').addEventListener('change', showChangeWindow);
+    </script>
+</body>
+</html>

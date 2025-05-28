@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Горюнова Алина</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #e8e8e8;
+            border: 2px solid #999;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input[type="number"] {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            font-size: 14px;
+            background-color: white;
+        }
+        
+        .result-group {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-label {
+            font-weight: bold;
+            color: #333;
+            width: 120px;
+        }
+        
+        .result-field {
+            width: 120px;
+            padding: 5px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            background-color: #f9f9f9;
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            background-color: #d4d0c8;
+            border: 2px outset #d4d0c8;
+            padding: 8px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+        
+        button:hover {
+            background-color: #e0ddd6;
+        }
+        
+        button:active {
+            border: 2px inset #d4d0c8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Введите начисленную зарплату за следующие месяцы</h1>
+        
+        <form id="salaryForm">
+            <div class="form-group">
+                <label for="january">Январь:</label>
+                <input type="number" id="january" value="500" min="0" step="0.01">
+            </div>
+            
+            <div class="form-group">
+                <label for="february">Февраль:</label>
+                <input type="number" id="february" value="200" min="0" step="0.01">
+            </div>
+            
+            <div class="form-group">
+                <label for="march">Март:</label>
+                <input type="number" id="march" value="500" min="0" step="0.01">
+            </div>
+            
+            <div class="form-group">
+                <label for="april">Апрель:</label>
+                <input type="number" id="april" value="250" min="0" step="0.01">
+            </div>
+            
+            <div class="form-group">
+                <label for="may">Май:</label>
+                <input type="number" id="may" value="350" min="0" step="0.01">
+            </div>
+            
+            <div class="form-group">
+                <label for="june">Июнь:</label>
+                <input type="number" id="june" value="500" min="0" step="0.01">
+            </div>
+            
+            <div class="result-group">
+                <span class="result-label">Средняя зарплата:</span>
+                <div class="result-field" id="averageSalary">350</div>
+            </div>
+            
+            <div class="button-group">
+                <button type="button" onclick="calculateAverage()">Вычислить</button>
+                <button type="button" onclick="clearForm()">Обновить</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        function calculateAverage() {
+            const january = parseFloat(document.getElementById('january').value) || 0;
+            const february = parseFloat(document.getElementById('february').value) || 0;
+            const march = parseFloat(document.getElementById('march').value) || 0;
+            const april = parseFloat(document.getElementById('april').value) || 0;
+            const may = parseFloat(document.getElementById('may').value) || 0;
+            const june = parseFloat(document.getElementById('june').value) || 0;
+            
+            const total = january + february + march + april + may + june;
+            const average = total / 6;
+            
+            const roundedAverage = Math.round(average * 100) / 100;
+        
+            document.getElementById('averageSalary').textContent = roundedAverage;
+            
+            console.log(`Расчет средней зарплаты:`);
+            console.log(`Январь: ${january}`);
+            console.log(`Февраль: ${february}`);
+            console.log(`Март: ${march}`);
+            console.log(`Апрель: ${april}`);
+            console.log(`Май: ${may}`);
+            console.log(`Июнь: ${june}`);
+            console.log(`Сумма: ${total}`);
+            console.log(`Средняя: ${roundedAverage}`);
+        }
+
+        function clearForm() {
+            document.getElementById('january').value = '';
+            document.getElementById('february').value = '';
+            document.getElementById('march').value = '';
+            document.getElementById('april').value = '';
+            document.getElementById('may').value = '';
+            document.getElementById('june').value = '';
+            document.getElementById('averageSalary').textContent = '0';
+        }
+        
+        function setupAutoCalculation() {
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateAverage);
+                input.addEventListener('change', calculateAverage);
+            });
+        }
+        
+        window.addEventListener('load', function() {
+            setupAutoCalculation();
+            calculateAverage(); 
+        });
+        
+        function validateInput(input) {
+            const value = parseFloat(input.value);
+            if (isNaN(value) || value < 0) {
+                input.style.backgroundColor = '#ffcccc';
+                return false;
+            } else {
+                input.style.backgroundColor = 'white';
+                return true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    validateInput(this);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

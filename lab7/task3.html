@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .click-area {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            padding: 50px;
+            margin: 20px 0;
+            min-height: 300px;
+            cursor: crosshair;
+            transition: all 0.3s ease;
+        }
+        
+        .click-area:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .coordinates-display {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        
+        .coord-item {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        .coord-label {
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .click-history {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .history-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Кликните, чтобы увидеть координаты!</p>
+        
+        <div class="click-area" id="clickArea" onclick="showCoordinates(event)">
+        </div>
+        
+        <div class="coordinates-display" id="coordDisplay">
+            <h3>Координаты последнего клика:</h3>
+            <div class="coord-item">
+                <span class="coord-label">clientX:</span> 
+                <span id="clientX">-</span> px (относительно окна)
+            </div>
+            <div class="coord-item">
+                <span class="coord-label">clientY:</span> 
+                <span id="clientY">-</span> px (относительно окна)
+            </div>
+            <div class="coord-item">
+                <span class="coord-label">pageX:</span> 
+                <span id="pageX">-</span> px (относительно документа)
+            </div>
+            <div class="coord-item">
+                <span class="coord-label">pageY:</span> 
+                <span id="pageY">-</span> px (относительно документа)
+            </div>
+            <div class="coord-item">
+                <span class="coord-label">offsetX:</span> 
+                <span id="offsetX">-</span> px (относительно элемента)
+            </div>
+            <div class="coord-item">
+                <span class="coord-label">offsetY:</span> 
+                <span id="offsetY">-</span> px (относительно элемента)
+            </div>
+        </div>
+        
+        <div class="click-history" id="clickHistory">
+            <h3>История кликов:</h3>
+            <div id="historyList">Кликов все еще нет...</div>
+        </div>
+    </div>
+    
+    <script>
+        let clickCount = 0;
+        
+        function showCoordinates(event) {
+            clickCount++;
+            
+            const clientX = event.clientX;
+            const clientY = event.clientY;
+            const pageX = event.pageX;
+            const pageY = event.pageY;
+            const offsetX = event.offsetX;
+            const offsetY = event.offsetY;
+            
+            document.getElementById('clientX').textContent = clientX;
+            document.getElementById('clientY').textContent = clientY;
+            document.getElementById('pageX').textContent = pageX;
+            document.getElementById('pageY').textContent = pageY;
+            document.getElementById('offsetX').textContent = offsetX;
+            document.getElementById('offsetY').textContent = offsetY;
+            
+            addToHistory(clickCount, clientX, clientY, pageX, pageY);
+            
+            createClickEffect(event);
+        }
+        
+        function addToHistory(count, clientX, clientY, pageX, pageY) {
+            const historyList = document.getElementById('historyList');
+            
+            if (count === 1) {
+                historyList.innerHTML = '';
+            }
+            
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            historyItem.innerHTML = `
+                <strong>Клик #${count}:</strong> 
+                client(${clientX}, ${clientY}) | 
+                page(${pageX}, ${pageY})
+            `;
+            
+            historyList.insertBefore(historyItem, historyList.firstChild);
+  
+            if (historyList.children.length > 10) {
+                historyList.removeChild(historyList.lastChild);
+            }
+        }
+        
+        function createClickEffect(event) {
+            const effect = document.createElement('div');
+            effect.style.position = 'absolute';
+            effect.style.left = event.pageX + 'px';
+            effect.style.top = event.pageY + 'px';
+            effect.style.width = '20px';
+            effect.style.height = '20px';
+            effect.style.backgroundColor = '#ffd700';
+            effect.style.borderRadius = '50%';
+            effect.style.transform = 'translate(-50%, -50%)';
+            effect.style.pointerEvents = 'none';
+            effect.style.zIndex = '1000';
+            effect.style.animation = 'clickEffect 0.6s ease-out forwards';
+            
+            if (!document.getElementById('clickEffectStyle')) {
+                const style = document.createElement('style');
+                style.id = 'clickEffectStyle';
+                style.textContent = `
+                    @keyframes clickEffect {
+                        0% {
+                            transform: translate(-50%, -50%) scale(0);
+                            opacity: 1;
+                        }
+                        100% {
+                            transform: translate(-50%, -50%) scale(3);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(effect);
+
+            setTimeout(() => {
+                if (effect.parentNode) {
+                    effect.parentNode.removeChild(effect);
+                }
+            }, 600);
+        }
+        
+
+        document.addEventListener('click', function(event) {
+
+            if (event.target.id !== 'clickArea' && !event.target.closest('#clickArea')) {
+                console.log(`Клик вне области: clientX: ${event.clientX}, clientY: ${event.clientY}`);
+            }
+        });
+    </script>
+</body>
+</html>
