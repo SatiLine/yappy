@@ -1,1 +1,66 @@
-Отче наш,..
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>SpaceX Explorer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; background: #181c24; color: #fff; margin: 0; }
+        section { max-width: 900px; margin: 40px auto; background: #23272f; padding: 32px; border-radius: 12px; }
+        #main-section { display: none; }
+        #nav-buttons { margin-bottom: 24px; }
+        #nav-buttons button { margin-right: 12px; padding: 8px 18px; font-size: 16px; border-radius: 5px; border: none; background: #2d8cff; color: #fff; cursor: pointer; }
+        #nav-buttons button.active { background: #1b5fa7; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { border: 1px solid #444; padding: 8px; text-align: left; }
+        th { background: #1b1e23; }
+        input[type="text"] { padding: 6px; border-radius: 4px; border: 1px solid #888; }
+        label { margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <!-- Приветственная страница -->
+    <section id="welcome-section">
+        <h1>Добро пожаловать!</h1>
+        <form id="welcome-form">
+            <label for="username">Введите ваше имя:</label>
+            <input type="text" id="username" name="username" required>
+            <button type="submit">Далее</button>
+        </form>
+    </section>
+
+    <!-- Главная страница -->
+    <section id="main-section">
+        <header>
+            <h2 id="greeting"></h2>
+        </header>
+        <main>
+            <div id="nav-buttons">
+                <button id="ships-btn" class="active">Корабли SpaceX</button>
+                <button id="starlink-btn">Спутники Starlink</button>
+                <button id="dragons-btn">Корабли Dragon</button>
+            </div>
+
+            <section id="ships-page">
+                <div id="ships-controls"></div>
+                <div id="ships-data"></div>
+                <div id="ships-statistics"></div>
+            </section>
+
+            <section id="starlink-page" style="display:none;">
+                <div id="starlink-controls"></div>
+                <div id="starlink-data"></div>
+                <div id="starlink-statistics"></div>
+            </section>
+
+            <section id="dragons-page" style="display:none;">
+                <div id="dragons-controls"></div>
+                <div id="dragons-data"></div>
+                <div id="dragons-statistics"></div>
+            </section>
+        </main>
+    </section>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
