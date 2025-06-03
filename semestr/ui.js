@@ -31,28 +31,43 @@ export function renderShipsData(data, container) {
         container.textContent = 'Нет данных для отображения.';
         return;
     }
-    const table = document.createElement('table');
-    table.innerHTML = `
-        <thead>
-            <tr>
-                <th>Имя</th>
-                <th>Тип</th>
-                <th>Порт</th>
-                <th>Активен</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${data.map(ship => `
-                <tr>
-                    <td>${ship.name || '-'}</td>
-                    <td>${ship.type || '-'}</td>
-                    <td>${ship.home_port || '-'}</td>
-                    <td>${ship.active ? 'Да' : 'Нет'}</td>
-                </tr>
-            `).join('')}
-        </tbody>
-    `;
-    container.appendChild(table);
+    const grid = document.createElement('div');
+    grid.className = 'tile-grid';
+
+    data.forEach(ship => {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.tabIndex = 0;
+        tile.setAttribute('data-id', ship.id);
+
+        const img = document.createElement('img');
+        img.src = 'starship.jpg'
+        img.alt = ship.name || 'Корабль SpaceX';
+
+        const title = document.createElement('div');
+        title.className = 'tile-title';
+        title.textContent = ship.name || 'Без имени';
+
+        tile.appendChild(img);
+        tile.appendChild(title);
+
+        tile.addEventListener('click', () => {
+            showModal(
+                ship.name,
+                `<b>Тип:</b> ${ship.type || '-'}<br>
+                 <b>Порт:</b> ${ship.home_port || '-'}<br>
+                 <b>Активен:</b> ${ship.active ? 'Да' : 'Нет'}<br>
+                 ${ship.year_built ? `<b>Год постройки:</b> ${ship.year_built}<br>` : ''}
+                 ${ship.url ? `<b><a href="${ship.url}" target="_blank" style="color:#2d8cff;">Подробнее</a></b><br>` : ''}
+                 ${ship.description || ''}`,
+                ship.image
+            );
+        });
+
+        grid.appendChild(tile);
+    });
+
+    container.appendChild(grid);
 }
 
 export function renderShipsStatistics(stat, container) {
@@ -81,26 +96,38 @@ export function renderStarlinkData(data, container) {
         container.textContent = 'Нет данных для отображения.';
         return;
     }
-    const table = document.createElement('table');
-    table.innerHTML = `
-        <thead>
-            <tr>
-                <th>Имя</th>
-                <th>Дата запуска</th>
-                <th>Номер NORAD</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${data.map(sat => `
-                <tr>
-                    <td>${sat.spaceTrack?.OBJECT_NAME || '-'}</td>
-                    <td>${sat.spaceTrack?.LAUNCH_DATE || '-'}</td>
-                    <td>${sat.spaceTrack?.OBJECT_ID || '-'}</td>
-                </tr>
-            `).join('')}
-        </tbody>
-    `;
-    container.appendChild(table);
+    const grid = document.createElement('div');
+    grid.className = 'tile-grid';
+
+    data.forEach(sat => {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.tabIndex = 0;
+
+        const img = document.createElement('img');
+        img.src = 'starlink.jpg';
+        img.alt = sat.spaceTrack?.OBJECT_NAME || 'Starlink';
+
+        const title = document.createElement('div');
+        title.className = 'tile-title';
+        title.textContent = sat.spaceTrack?.OBJECT_NAME || 'Starlink';
+
+        tile.appendChild(img);
+        tile.appendChild(title);
+
+        tile.addEventListener('click', () => {
+            showModal(
+                sat.spaceTrack?.OBJECT_NAME,
+                `<b>Дата запуска:</b> ${sat.spaceTrack?.LAUNCH_DATE || '-'}<br>
+                 <b>NORAD ID:</b> ${sat.spaceTrack?.OBJECT_ID || '-'}<br>
+                 <b>Статус:</b> ${sat.spaceTrack?.STATUS || '-'}`
+            );
+        });
+
+        grid.appendChild(tile);
+    });
+
+    container.appendChild(grid);
 }
 
 export function renderStarlinkStatistics(stat, container) {
@@ -129,32 +156,71 @@ export function renderDragonsData(data, container) {
         container.textContent = 'Нет данных для отображения.';
         return;
     }
-    const table = document.createElement('table');
-    table.innerHTML = `
-        <thead>
-            <tr>
-                <th>Имя</th>
-                <th>Тип</th>
-                <th>Экипаж</th>
-                <th>Масса (кг)</th>
-                <th>Описание</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${data.map(dragon => `
-                <tr>
-                    <td>${dragon.name || '-'}</td>
-                    <td>${dragon.type || '-'}</td>
-                    <td>${dragon.crew_capacity ?? '-'}</td>
-                    <td>${dragon.dry_mass_kg ?? '-'}</td>
-                    <td>${dragon.description ? dragon.description.slice(0, 80) + '...' : '-'}</td>
-                </tr>
-            `).join('')}
-        </tbody>
-    `;
-    container.appendChild(table);
+    const grid = document.createElement('div');
+    grid.className = 'tile-grid';
+
+    data.forEach(dragon => {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.tabIndex = 0;
+
+        const img = document.createElement('img');
+        img.src = dragon.flickr_images?.[0] || 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/SpaceX_Crew_Dragon_%2848999388147%29.jpg/320px-SpaceX_Crew_Dragon_%2848999388147%29.jpg';
+        img.alt = dragon.name || 'Dragon';
+
+        const title = document.createElement('div');
+        title.className = 'tile-title';
+        title.textContent = dragon.name || 'Dragon';
+
+        tile.appendChild(img);
+        tile.appendChild(title);
+
+        tile.addEventListener('click', () => {
+            showModal(
+                dragon.name,
+                `<b>Тип:</b> ${dragon.type || '-'}<br>
+                 <b>Экипаж:</b> ${dragon.crew_capacity ?? '-'}<br>
+                 <b>Масса (кг):</b> ${dragon.dry_mass_kg ?? '-'}<br>
+                 <b>Описание:</b> ${dragon.description ? dragon.description.slice(0, 200) + '...' : '-'}`
+                , dragon.flickr_images?.[0]
+            );
+        });
+
+        grid.appendChild(tile);
+    });
+
+    container.appendChild(grid);
 }
 
 export function renderDragonsStatistics(data, container) {
     container.innerHTML = `Всего: ${data.length}`;
+}
+
+// --- Модальное окно ---
+function showModal(title, html, image) {
+    document.querySelectorAll('.modal-bg').forEach(el => el.remove());
+
+    const bg = document.createElement('div');
+    bg.className = 'modal-bg';
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'modal-close';
+    closeBtn.innerHTML = '&times;';
+    closeBtn.addEventListener('click', () => bg.remove());
+
+    modal.innerHTML = `
+        <div class="modal-title">${title || ''}</div>
+        ${image ? `<img src="${image}" alt="${title}" style="width:100px; border-radius:8px; margin-bottom:10px;">` : ''}
+        <div style="margin-bottom:10px; color:#b3c6ff;">${html || ''}</div>
+    `;
+    modal.appendChild(closeBtn);
+    bg.appendChild(modal);
+    document.body.appendChild(bg);
+
+    bg.addEventListener('click', e => {
+        if (e.target === bg) bg.remove();
+    });
 }

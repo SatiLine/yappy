@@ -22,7 +22,6 @@ import {
     renderDragonsStatistics
 } from './ui.js';
 
-// DOM-элементы
 const welcomeSection = document.getElementById('welcome-section');
 const mainSection = document.getElementById('main-section');
 const greetingHeader = document.getElementById('greeting');
@@ -47,7 +46,6 @@ const dragonsStatistics = document.getElementById('dragons-statistics');
 const welcomeForm = document.getElementById('welcome-form');
 const usernameInput = document.getElementById('username');
 
-// Состояние приложения
 let userName = '';
 let shipsRaw = [];
 let shipsFiltered = [];
@@ -56,7 +54,6 @@ let starlinkFiltered = [];
 let dragonsRaw = [];
 let dragonsFiltered = [];
 
-// --- Приветственная страница ---
 welcomeForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     userName = usernameInput.value.trim();
@@ -77,7 +74,6 @@ welcomeForm.addEventListener('submit', async (event) => {
     }
 });
 
-// --- Навигация между разделами ---
 shipsBtn.addEventListener('click', () => { showShipsPage(); setActiveButton(shipsBtn); });
 starlinkBtn.addEventListener('click', () => { showStarlinkPage(); setActiveButton(starlinkBtn); });
 dragonsBtn.addEventListener('click', () => { showDragonsPage(); setActiveButton(dragonsBtn); });
@@ -87,7 +83,6 @@ function setActiveButton(activeBtn) {
     activeBtn.classList.add('active');
 }
 
-// --- Корабли SpaceX ---
 function showShipsPage() {
     shipsPage.style.display = 'block';
     starlinkPage.style.display = 'none';
@@ -107,7 +102,6 @@ function onShipsControlChange(options) {
     renderShipsStatistics(getShipsStatistics(shipsFiltered), shipsStatistics);
 }
 
-// --- Спутники Starlink ---
 function showStarlinkPage() {
     shipsPage.style.display = 'none';
     starlinkPage.style.display = 'block';
@@ -127,7 +121,6 @@ function onStarlinkControlChange(options) {
     renderStarlinkStatistics(getStarlinkStatistics(starlinkFiltered), starlinkStatistics);
 }
 
-// --- Корабли Dragon ---
 function showDragonsPage() {
     shipsPage.style.display = 'none';
     starlinkPage.style.display = 'none';
@@ -151,7 +144,6 @@ function onDragonsControlChange(options) {
     renderDragonsStatistics(dragonsFiltered, dragonsStatistics);
 }
 
-// --- Инициализация приложения ---
 function init() {
     welcomeSection.style.display = 'block';
     mainSection.style.display = 'none';

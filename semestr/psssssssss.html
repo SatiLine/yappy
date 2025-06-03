@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <title>SpaceX Explorer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Подключение внешнего CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Приветственная страница -->
     <section id="welcome-section">
         <h1>Добро пожаловать!</h1>
-        <form id="welcome-form">
-            <label for="username">Введите ваше имя:</label>
-            <input type="text" id="username" name="username" required>
-            <button type="submit">Далее</button>
-        </form>
+        <div class="welcome-form-card">
+            <form id="welcome-form">
+                <label for="username">Введите ваше имя:</label>
+                <input type="text" id="username" name="username" required>
+                <button type="submit">Далее</button>
+            </form>
+        </div>
     </section>
 
     <!-- Главная страница (скрыта по умолчанию) -->
