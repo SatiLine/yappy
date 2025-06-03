@@ -22,134 +22,145 @@ import {
     renderDragonsStatistics
 } from './ui.js';
 
-const welcomeSection = document.getElementById('welcome-section');
-const mainSection = document.getElementById('main-section');
-const greetingHeader = document.getElementById('greeting');
-const shipsBtn = document.getElementById('ships-btn');
-const starlinkBtn = document.getElementById('starlink-btn');
-const dragonsBtn = document.getElementById('dragons-btn');
+class App {
+    constructor() {
+        // DOM-элементы
+        this.welcomeSection = document.getElementById('welcome-section');
+        this.mainSection = document.getElementById('main-section');
+        this.greetingHeader = document.getElementById('greeting');
+        this.shipsBtn = document.getElementById('ships-btn');
+        this.starlinkBtn = document.getElementById('starlink-btn');
+        this.dragonsBtn = document.getElementById('dragons-btn');
 
-const shipsPage = document.getElementById('ships-page');
-const starlinkPage = document.getElementById('starlink-page');
-const dragonsPage = document.getElementById('dragons-page');
+        this.shipsPage = document.getElementById('ships-page');
+        this.starlinkPage = document.getElementById('starlink-page');
+        this.dragonsPage = document.getElementById('dragons-page');
 
-const shipsControls = document.getElementById('ships-controls');
-const shipsData = document.getElementById('ships-data');
-const shipsStatistics = document.getElementById('ships-statistics');
-const starlinkControls = document.getElementById('starlink-controls');
-const starlinkData = document.getElementById('starlink-data');
-const starlinkStatistics = document.getElementById('starlink-statistics');
-const dragonsControls = document.getElementById('dragons-controls');
-const dragonsData = document.getElementById('dragons-data');
-const dragonsStatistics = document.getElementById('dragons-statistics');
+        this.shipsControls = document.getElementById('ships-controls');
+        this.shipsData = document.getElementById('ships-data');
+        this.shipsStatistics = document.getElementById('ships-statistics');
+        this.starlinkControls = document.getElementById('starlink-controls');
+        this.starlinkData = document.getElementById('starlink-data');
+        this.starlinkStatistics = document.getElementById('starlink-statistics');
+        this.dragonsControls = document.getElementById('dragons-controls');
+        this.dragonsData = document.getElementById('dragons-data');
+        this.dragonsStatistics = document.getElementById('dragons-statistics');
 
-const welcomeForm = document.getElementById('welcome-form');
-const usernameInput = document.getElementById('username');
+        this.welcomeForm = document.getElementById('welcome-form');
+        this.usernameInput = document.getElementById('username');
 
-let userName = '';
-let shipsRaw = [];
-let shipsFiltered = [];
-let starlinkRaw = [];
-let starlinkFiltered = [];
-let dragonsRaw = [];
-let dragonsFiltered = [];
+        // Состояние
+        this.userName = '';
+        this.shipsRaw = [];
+        this.shipsFiltered = [];
+        this.starlinkRaw = [];
+        this.starlinkFiltered = [];
+        this.dragonsRaw = [];
+        this.dragonsFiltered = [];
 
-welcomeForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    userName = usernameInput.value.trim();
-    if (userName) {
-        welcomeSection.style.display = 'none';
-        mainSection.style.display = 'block';
-        showGreeting(userName, greetingHeader);
-
-        shipsData.textContent = 'Загрузка...';
-        starlinkData.textContent = 'Загрузка...';
-        dragonsData.textContent = 'Загрузка...';
-        try { shipsRaw = await fetchShips(); } catch { shipsData.textContent = 'Ошибка загрузки кораблей'; }
-        try { starlinkRaw = await fetchStarlinkSatellites(); } catch { starlinkData.textContent = 'Ошибка загрузки спутников'; }
-        try { dragonsRaw = await fetchDragons(); } catch { dragonsData.textContent = 'Ошибка загрузки Dragon'; }
-
-        showShipsPage();
-        setActiveButton(shipsBtn);
+        this.init();
     }
-});
 
-shipsBtn.addEventListener('click', () => { showShipsPage(); setActiveButton(shipsBtn); });
-starlinkBtn.addEventListener('click', () => { showStarlinkPage(); setActiveButton(starlinkBtn); });
-dragonsBtn.addEventListener('click', () => { showDragonsPage(); setActiveButton(dragonsBtn); });
+    init() {
+        this.welcomeSection.style.display = 'block';
+        this.mainSection.style.display = 'none';
+        this.shipsPage.style.display = 'none';
+        this.starlinkPage.style.display = 'none';
+        this.dragonsPage.style.display = 'none';
+        this.setActiveButton(this.shipsBtn);
 
-function setActiveButton(activeBtn) {
-    [shipsBtn, starlinkBtn, dragonsBtn].forEach(btn => btn.classList.remove('active'));
-    activeBtn.classList.add('active');
+        // Обработчики
+        this.welcomeForm.addEventListener('submit', (event) => this.handleWelcomeSubmit(event));
+        this.shipsBtn.addEventListener('click', () => { this.showShipsPage(); this.setActiveButton(this.shipsBtn); });
+        this.starlinkBtn.addEventListener('click', () => { this.showStarlinkPage(); this.setActiveButton(this.starlinkBtn); });
+        this.dragonsBtn.addEventListener('click', () => { this.showDragonsPage(); this.setActiveButton(this.dragonsBtn); });
+    }
+
+    async handleWelcomeSubmit(event) {
+        event.preventDefault();
+        this.userName = this.usernameInput.value.trim();
+        if (this.userName) {
+            this.welcomeSection.style.display = 'none';
+            this.mainSection.style.display = 'block';
+            showGreeting(this.userName, this.greetingHeader);
+
+            this.shipsData.textContent = 'Загрузка...';
+            this.starlinkData.textContent = 'Загрузка...';
+            this.dragonsData.textContent = 'Загрузка...';
+            try { this.shipsRaw = await fetchShips(); } catch { this.shipsData.textContent = 'Ошибка загрузки кораблей'; }
+            try { this.starlinkRaw = await fetchStarlinkSatellites(); } catch { this.starlinkData.textContent = 'Ошибка загрузки спутников'; }
+            try { this.dragonsRaw = await fetchDragons(); } catch { this.dragonsData.textContent = 'Ошибка загрузки Dragon'; }
+
+            this.showShipsPage();
+            this.setActiveButton(this.shipsBtn);
+        }
+    }
+
+    setActiveButton(activeBtn) {
+        [this.shipsBtn, this.starlinkBtn, this.dragonsBtn].forEach(btn => btn.classList.remove('active'));
+        activeBtn.classList.add('active');
+    }
+
+    showShipsPage() {
+        this.shipsPage.style.display = 'block';
+        this.starlinkPage.style.display = 'none';
+        this.dragonsPage.style.display = 'none';
+
+        renderShipsControls(this.shipsControls, (options) => this.onShipsControlChange(options));
+        this.shipsFiltered = [...this.shipsRaw];
+        renderShipsData(this.shipsFiltered, this.shipsData);
+        renderShipsStatistics(getShipsStatistics(this.shipsFiltered), this.shipsStatistics);
+    }
+
+    onShipsControlChange(options) {
+        let result = filterShipsByName(this.shipsRaw, options.search);
+        result = sortShipsByName(result, options.sort === 'asc');
+        this.shipsFiltered = result;
+        renderShipsData(this.shipsFiltered, this.shipsData);
+        renderShipsStatistics(getShipsStatistics(this.shipsFiltered), this.shipsStatistics);
+    }
+
+    showStarlinkPage() {
+        this.shipsPage.style.display = 'none';
+        this.starlinkPage.style.display = 'block';
+        this.dragonsPage.style.display = 'none';
+
+        renderStarlinkControls(this.starlinkControls, (options) => this.onStarlinkControlChange(options));
+        this.starlinkFiltered = [...this.starlinkRaw];
+        renderStarlinkData(this.starlinkFiltered, this.starlinkData);
+        renderStarlinkStatistics(getStarlinkStatistics(this.starlinkFiltered), this.starlinkStatistics);
+    }
+
+    onStarlinkControlChange(options) {
+        let result = [...this.starlinkRaw];
+        result = sortStarlinkByLaunchDate(result, options.sort === 'asc');
+        this.starlinkFiltered = result;
+        renderStarlinkData(this.starlinkFiltered, this.starlinkData);
+        renderStarlinkStatistics(getStarlinkStatistics(this.starlinkFiltered), this.starlinkStatistics);
+    }
+
+    showDragonsPage() {
+        this.shipsPage.style.display = 'none';
+        this.starlinkPage.style.display = 'none';
+        this.dragonsPage.style.display = 'block';
+
+        renderDragonsControls(this.dragonsControls, (options) => this.onDragonsControlChange(options));
+        this.dragonsFiltered = [...this.dragonsRaw];
+        renderDragonsData(this.dragonsFiltered, this.dragonsData);
+        renderDragonsStatistics(this.dragonsFiltered, this.dragonsStatistics);
+    }
+
+    onDragonsControlChange(options) {
+        this.dragonsFiltered = [...this.dragonsRaw];
+        this.dragonsFiltered.sort((a, b) => {
+            if (!a.name || !b.name) return 0;
+            return options.sort === 'asc'
+                ? a.name.localeCompare(b.name)
+                : b.name.localeCompare(a.name);
+        });
+        renderDragonsData(this.dragonsFiltered, this.dragonsData);
+        renderDragonsStatistics(this.dragonsFiltered, this.dragonsStatistics);
+    }
 }
 
-function showShipsPage() {
-    shipsPage.style.display = 'block';
-    starlinkPage.style.display = 'none';
-    dragonsPage.style.display = 'none';
-
-    renderShipsControls(shipsControls, onShipsControlChange);
-    shipsFiltered = [...shipsRaw];
-    renderShipsData(shipsFiltered, shipsData);
-    renderShipsStatistics(getShipsStatistics(shipsFiltered), shipsStatistics);
-}
-
-function onShipsControlChange(options) {
-    let result = filterShipsByName(shipsRaw, options.search);
-    result = sortShipsByName(result, options.sort === 'asc');
-    shipsFiltered = result;
-    renderShipsData(shipsFiltered, shipsData);
-    renderShipsStatistics(getShipsStatistics(shipsFiltered), shipsStatistics);
-}
-
-function showStarlinkPage() {
-    shipsPage.style.display = 'none';
-    starlinkPage.style.display = 'block';
-    dragonsPage.style.display = 'none';
-
-    renderStarlinkControls(starlinkControls, onStarlinkControlChange);
-    starlinkFiltered = [...starlinkRaw];
-    renderStarlinkData(starlinkFiltered, starlinkData);
-    renderStarlinkStatistics(getStarlinkStatistics(starlinkFiltered), starlinkStatistics);
-}
-
-function onStarlinkControlChange(options) {
-    let result = [...starlinkRaw];
-    result = sortStarlinkByLaunchDate(result, options.sort === 'asc');
-    starlinkFiltered = result;
-    renderStarlinkData(starlinkFiltered, starlinkData);
-    renderStarlinkStatistics(getStarlinkStatistics(starlinkFiltered), starlinkStatistics);
-}
-
-function showDragonsPage() {
-    shipsPage.style.display = 'none';
-    starlinkPage.style.display = 'none';
-    dragonsPage.style.display = 'block';
-
-    renderDragonsControls(dragonsControls, onDragonsControlChange);
-    dragonsFiltered = [...dragonsRaw];
-    renderDragonsData(dragonsFiltered, dragonsData);
-    renderDragonsStatistics(dragonsFiltered, dragonsStatistics);
-}
-
-function onDragonsControlChange(options) {
-    dragonsFiltered = [...dragonsRaw];
-    dragonsFiltered.sort((a, b) => {
-        if (!a.name || !b.name) return 0;
-        return options.sort === 'asc'
-            ? a.name.localeCompare(b.name)
-            : b.name.localeCompare(a.name);
-    });
-    renderDragonsData(dragonsFiltered, dragonsData);
-    renderDragonsStatistics(dragonsFiltered, dragonsStatistics);
-}
-
-function init() {
-    welcomeSection.style.display = 'block';
-    mainSection.style.display = 'none';
-    shipsPage.style.display = 'none';
-    starlinkPage.style.display = 'none';
-    dragonsPage.style.display = 'none';
-    setActiveButton(shipsBtn);
-}
-init();
+new App();

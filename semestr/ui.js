@@ -1,9 +1,8 @@
-// Приветствие пользователя
 export function showGreeting(userName, greetingHeader) {
     greetingHeader.textContent = `Привет, ${userName}!`;
 }
 
-// --- Корабли SpaceX ---
+// Корабли SpaceX 
 export function renderShipsControls(container, onChange) {
     container.innerHTML = '';
     const searchInput = document.createElement('input');
@@ -41,7 +40,7 @@ export function renderShipsData(data, container) {
         tile.setAttribute('data-id', ship.id);
 
         const img = document.createElement('img');
-        img.src = 'starship.jpg'; // ОДНА картинка starship.jpg для всех плиток
+        img.src = 'starship.jpg'; 
         img.alt = ship.name || 'Корабль SpaceX';
 
         const title = document.createElement('div');
@@ -60,7 +59,7 @@ export function renderShipsData(data, container) {
                  ${ship.year_built ? `<b>Год постройки:</b> ${ship.year_built}<br>` : ''}
                  ${ship.url ? `<b><a href="${ship.url}" target="_blank" style="color:#2d8cff;">Подробнее</a></b><br>` : ''}
                  ${ship.description || ''}`,
-                'starship.jpg' // Передаем ту же картинку в модальное окно
+                'starship.jpg' 
             );
         });
 
@@ -74,7 +73,7 @@ export function renderShipsStatistics(stat, container) {
     container.innerHTML = `Всего: ${stat.count}, Активных: ${stat.active}`;
 }
 
-// --- Спутники Starlink ---
+// Спутники Starlink
 export function renderStarlinkControls(container, onChange) {
     container.innerHTML = '';
     const sortSelect = document.createElement('select');
@@ -105,7 +104,7 @@ export function renderStarlinkData(data, container) {
         tile.tabIndex = 0;
 
         const img = document.createElement('img');
-        img.src = 'starlink.jpg'; // ОДНА картинка starlink.jpg для всех плиток
+        img.src = 'starlink.jpg'; 
         img.alt = sat.spaceTrack?.OBJECT_NAME || 'Starlink';
 
         const title = document.createElement('div');
@@ -121,7 +120,7 @@ export function renderStarlinkData(data, container) {
                 `<b>Дата запуска:</b> ${sat.spaceTrack?.LAUNCH_DATE || '-'}<br>
                  <b>NORAD ID:</b> ${sat.spaceTrack?.OBJECT_ID || '-'}<br>
                  <b>Статус:</b> ${sat.spaceTrack?.STATUS || '-'}`
-                , 'starlink.jpg' // Передаем ту же картинку в модальное окно
+                , 'starlink.jpg' 
             );
         });
 
@@ -135,7 +134,7 @@ export function renderStarlinkStatistics(stat, container) {
     container.innerHTML = `Всего: ${stat.count}, Активных: ${stat.operational}`;
 }
 
-// --- Корабли Dragon ---
+// Корабли Dragon
 export function renderDragonsControls(container, onChange) {
     container.innerHTML = '';
     const sortSelect = document.createElement('select');
@@ -197,7 +196,7 @@ export function renderDragonsStatistics(data, container) {
     container.innerHTML = `Всего: ${data.length}`;
 }
 
-// --- Модальное окно ---
+// Модальное окно
 function showModal(title, html, image) {
     document.querySelectorAll('.modal-bg').forEach(el => el.remove());
 

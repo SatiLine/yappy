@@ -1,20 +1,20 @@
 const SPACEX_API_BASE = 'https://api.spacexdata.com/v4';
 
-// Получить все корабли SpaceX
+// все корабли SpaceX
 export async function fetchShips() {
     const response = await fetch(`${SPACEX_API_BASE}/ships`);
     if (!response.ok) throw new Error('Ошибка загрузки данных о кораблях');
     return await response.json();
 }
 
-// Получить все спутники Starlink
+// все спутники Starlink
 export async function fetchStarlinkSatellites() {
     const response = await fetch(`${SPACEX_API_BASE}/starlink`);
     if (!response.ok) throw new Error('Ошибка загрузки данных о спутниках Starlink');
     return await response.json();
 }
 
-// Получить все капсулы Dragon
+// все капсулы Dragon
 export async function fetchDragons() {
     const response = await fetch(`${SPACEX_API_BASE}/dragons`);
     if (!response.ok) throw new Error('Ошибка загрузки данных о Dragon');
